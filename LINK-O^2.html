@@ -1,0 +1,186 @@
+<html>
+<title> LINK-O </title>
+<head>
+<style>
+.menubar
+{
+	height:50px;
+	width:1000px;
+	background-color:#333;
+	border-width:5px;
+	border-color:#000;
+	
+}
+.intext
+{
+	float:left;
+	height:500px;
+	width:500px;
+	background-color:#09F;
+	box-shadow: 10px 10px 5px #999;
+	border-width:5px;
+	border-color:#FFF;
+	font-family:"Palatino Linotype", "Book Antiqua", Palatino, serif;
+	font-size:16px;
+}
+.button
+{
+	float:left;
+	width:auto;
+	height:40px;
+	margin-top:+4px;
+	background-color:#CCC;
+	border-color:#FFF;
+	border-width:3px;
+	font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	font-size:24px;
+	color:#000;
+	
+}
+.space
+{
+	float:left;
+	width:25px;
+	height:50px;
+	background-color:#CCC;
+}
+.txtfrmt
+{
+	text-align:center;
+	text-decoration:blink;
+	font-family:"Lucida Console", Monaco, monospace;
+	color:#FFF;
+	vertical-align:middle;
+}
+.txtarea
+{
+	position:absolute;
+	background-color:#09F;
+	border-color:#FFF;
+	height:500px;
+	width:500px;
+	vertical-align:middle;
+	alignment-adjust:middle;
+	font-family:"Palatino Linotype", "Book Antiqua", Palatino, serif;
+	font-size:16px;
+	color:#FFF;	
+}
+.clrbutton
+{
+	width:20px;
+	height:20px;
+	float:left;
+	background-color:#000;
+}
+	
+</style>
+<script>
+	function edit(val1,val2)
+	{
+		var text=document.getElementById("input");
+		if(text.selectionStart!=text.selectionEnd)
+		{
+			if(val1=="dold"||val1=="ditalics")
+			{
+				var begin=text.value.substring(0,text.selectionStart);
+			    var sel=text.value.substring(text.selectionStart,text.selectionEnd);
+				var selm=sel.toUpperCase();
+			    var end=text.value.substring(text.selectionEnd);
+				modtxt=begin+selm+end;
+				document.getElementById("input").value=modtxt;
+				if(val1=="dold")
+				{
+					edit('[b]','[/b]');	
+				}
+				if(val1=="ditalics")
+				{
+					edit('[i]','[/i]');	
+				}
+				
+			}
+			else	
+			{
+			var begin=text.value.substring(0,text.selectionStart);
+			var sel=text.value.substring(text.selectionStart,text.selectionEnd);
+			var end=text.value.substring(text.selectionEnd);
+			modtxt=begin+val1+sel+val2+end;
+			}
+			
+		}
+		
+	document.getElementById("input").value=modtxt;
+
+	}
+	
+	function view_text()
+{
+	var ip=document.getElementById("input");
+    var op=document.getElementById("output");	
+
+    var modtxt;
+	modtxt=ip.value;
+	// Simple Edits
+	modtxt=modtxt.replace(/\n/gi,"<br>");
+	// Deactivating The HTML tag inserts
+	modtxt=modtxt.replace(/\>/,">");
+	modtxt=modtxt.replace(/\</,"<");
+	
+	modtxt = modtxt.replace(/\[b\]/gi, "<b>");
+	modtxt = modtxt.replace(/\[\/b\]/gi, "</b>");
+    modtxt = modtxt.replace(/\[i\]/gi, "<i>");
+    modtxt = modtxt.replace(/\[\/i\]/gi, "</i>");
+    modtxt = modtxt.replace(/\[u\]/gi, "<u>");
+    modtxt = modtxt.replace(/\[\/u\]/gi, "</u>");
+	modtxt = modtxt.replace(/\[#6\]/g,"<font color='#666'>");
+	modtxt = modtxt.replace(/\[#9\]/g,"<font color='#999'>");
+	modtxt = modtxt.replace(/\[#F\]/g,"<font color='#FFF'>");
+	modtxt = modtxt.replace(/\[#F0\]/g,"<font color='#F00'>");
+	modtxt = modtxt.replace(/\[#0F\]/g,"<font color='#0F0'>");
+	modtxt = modtxt.replace(/\[#0\]/g,"<font color='#00F'>");
+	modtxt = modtxt.replace(/\[#FF\]/g,"<font color='#FF0'>");
+    modtxt = modtxt.replace(/\[\/c\]/g,"</font>"); 
+
+	
+	
+	op.innerHTML=modtxt;
+}
+function help()
+{
+	var text=" All that you have to do is <br>First type in your text on the BLUE side<br>Then just do whatever changes you want to do at the BLUE side,<br>Finalize it then click SUBMIT ,<br>To get the finalized text at the BLACK side<br><br><br>        Regards,<br>Sherine Davis ";
+	document.getElementById("output").innerHTML=text;
+}
+
+	
+</script>
+</head>
+<body>
+<div class="menubar"  style="border-width:5px">
+    <input id="bold" class="button" onClick="edit('[b]','[/b]')" type="button" value="Bold"/>
+    <input id="italics" class="button" onClick="edit('[i]','[/i]')" type="button" value="Italics" />
+    <input id="underline" class="button" onClick="edit('[u]','[/u]')" type="button"  value="Underline"/>
+    <input id="dold" class="button" onClick="edit('dold','dold')" type="button" value="Dold"/>
+    <input id="ditalics" class="button" onClick="edit('ditalics','ditalics')" type="button" value="Ditalics" />
+    <input id="para" class="button" type="button" value="Pragraph"/>
+    <input id="submit" class="button" type="button" value="Submit" onClick="view_text()" style="float:right"/>
+    <input id="submit" class="button" type="button" value="Help" onClick="help()" style="float:right"/>
+</div>
+<div id="clrpack" style="position:relative;height:45px;width:85px;background-color:#333"/>
+<div class="clrbutton" ></div>
+<div class="clrbutton" onClick="edit('[#6]','[/u]')" style="background-color:#666"></div>
+<div class="clrbutton" onClick="edit('[#9]','[/u]')" style="background-color:#999"></div>
+<div class="clrbutton" onClick="edit('[#F]','[/u]')" style="background-color:#FFF"></div>
+<div class="clrbutton" onClick="edit('[#F0]','[/u]')" style="background-color:#F00"></div>
+<div class="clrbutton" onClick="edit('[#0F]','[/u]')" style="background-color:#0F0"></div>
+<div class="clrbutton" onClick="edit('[#0]','[/u]')" style="background-color:#00F"></div>
+<div class="clrbutton" onClick="edit('[#FF]','[/u]')" style="background-color:#FF0"></div>
+</div>
+<div id="container" style="width:1000px">
+    <div class="intext" >
+    <textarea id="input" class="txtarea">
+    </textarea> 
+    </div>
+    <div id="output" class="intext" style="background-color:#000; color:#0F3">
+    </div>
+</div>
+</body>
+</html>
